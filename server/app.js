@@ -4,10 +4,15 @@ const PORT = 5000
 const db = require('./models')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
+const bodyParser = require('body-parser')
 
-app.use(cookieParser())
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+  origin: true,
+  credentials: true,
+  methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD'],
+}))
+app.use(cookieParser())
 
 const authRouter = require('./routes/Auth')
 app.use("/auth", authRouter)

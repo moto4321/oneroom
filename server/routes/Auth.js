@@ -57,8 +57,12 @@ router.post("/login", async (req, res) => {
   }
 })
 
-router.post("/logout", async (req, res) => {
-  res.clearCookie("user")
+router.get("/logout", async (req, res) => {
+  console.log('world')
+  res.cookie("user", '', { maxAge: 0 })
+  console.log('what?')
+  // res.redirect("/")
+  // res.clearCookie("user", { expires: Date.now() })
 })
 
 // router.use(jwt({ secret: "secret", algorithms: ['HS256'] }));

@@ -19,9 +19,9 @@ function App() {
   const [loginState, setLoginState] = useRecoilState(authState)
 
   const onLogoutHandler = () => {
-    axios.post('http://localhost:5000/auth/logout')
-    .then(() => {
-      console.log('logout!!')
+    axios.get("http://localhost:5000/auth/logout")
+    .then(response => {
+      console.log(response.data.ddd)
     })
   }
 

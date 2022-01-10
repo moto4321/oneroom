@@ -3,7 +3,7 @@ const router = express.Router()
 const { Users } = require('../models')
 const bcrypt = require('bcrypt')
 const jsonwebtoken = require('jsonwebtoken')
-const jwt = require('express-jwt')
+const jwt = require('express-jwt') // not used
 
 
 router.post("/registration", async (req, res) => {
@@ -55,6 +55,10 @@ router.post("/login", async (req, res) => {
       }
     })
   }
+})
+
+router.post("/logout", async (req, res) => {
+  res.clearCookie("user")
 })
 
 // router.use(jwt({ secret: "secret", algorithms: ['HS256'] }));

@@ -17,6 +17,9 @@ app.use(cookieParser())
 const authRouter = require('./routes/Auth')
 app.use("/auth", authRouter)
 
+// const postRouter = require('./routes/Post')
+// app.use("/post", postRouter)
+
 
 
 // app.listen(PORT, () => {

@@ -13,10 +13,17 @@ import {
   useRecoilValue, useSetRecoilState, useResetRecoilState 
 } from 'recoil';
 import { authState } from './state';
+import axios from 'axios';
 
 function App() {
   const [loginState, setLoginState] = useRecoilState(authState)
 
+  const onLogoutHandler = () => {
+    axios.post('http://localhost:5000/auth/logout')
+    .then(() => {
+      console.log('logout!!')
+    })
+  }
 
   return (
     <div className="App">
@@ -24,9 +31,14 @@ function App() {
         <Container>
           <Navbar.Brand href="/">Navbar</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#features">Features</Nav.Link>
-            <Nav.Link href="#pricing">Pricing</Nav.Link>
+            <Nav.Link href="/">Home</Nav.Link>
+          </Nav>
+          <Nav>
+            <Nav.Item className="ml-auto">
+              <Nav.Link href="/login">Login</Nav.Link>
+              <Nav.Link href="/registration">Register</Nav.Link>
+              <Nav.Link onClick={onLogoutHandler}>Logout</Nav.Link>
+            </Nav.Item>
           </Nav>
         </Container>
       </Navbar>

@@ -17,9 +17,9 @@ function LoginPage() {
         }
         // console.log(body)
         axios.post('http://localhost:5000/auth/login', body, {
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            // headers: {
+            //     'Content-Type': 'application/json'
+            // },
             withCredentials: true
         })
         .then((response) => {

@@ -21,7 +21,10 @@ function App() {
   const onLogoutHandler = () => {
     axios.get("http://localhost:5000/auth/logout")
     .then(response => {
-      console.log(response.data.ddd)
+      console.log(response.data.hello)
+    })
+    .catch(error => {
+      console.log(error)
     })
   }
 

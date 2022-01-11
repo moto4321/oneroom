@@ -7,12 +7,13 @@ const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 
 app.use(express.json())
+app.use(cookieParser())
+// app.use(express.urlencoded({ extended: true }))
 app.use(cors({
   origin: true,
   credentials: true,
-  methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD'],
+  methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD', 'DELETE'],
 }))
-app.use(cookieParser())
 
 const authRouter = require('./routes/Auth')
 app.use("/auth", authRouter)

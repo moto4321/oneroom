@@ -45,7 +45,9 @@ router.post("/login", async (req, res) => {
           id: user.id
         }, "secret")
 
-        res.cookie('user', accessToken, { httpOnly: true })
+        res.cookie('user', accessToken, {
+          httpOnly: true
+        })
         // console.log(req.cookies)
         res.json({
           token: accessToken,
@@ -58,11 +60,12 @@ router.post("/login", async (req, res) => {
 })
 
 router.get("/logout", async (req, res) => {
-  console.log('world')
-  res.cookie("user", '', { maxAge: 0 })
-  console.log('what?')
-  // res.redirect("/")
-  // res.clearCookie("user", { expires: Date.now() })
+  res.clearCookie('user', {
+    httpOnly: true,
+  })
+  res.json({
+    hello: "world"
+  })
 })
 
 // router.use(jwt({ secret: "secret", algorithms: ['HS256'] }));

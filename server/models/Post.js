@@ -1,10 +1,10 @@
 module.exports = (sequelize, DataTypes) => {
   const Posts = sequelize.define("Posts", {
-    email: {
+    title: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    password: {
+    description: {
       type: DataTypes.STRING,
       allowNull: false,
     }
@@ -13,15 +13,12 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: true
   })
 
-  // Users.associate = (models) => {
-  //   Users.hasMany(models.Likes, {
-  //     onDelete: "cascade",
-  //   })
 
-  //   Users.hasMany(models.Posts, {
-  //     onDelete: "cascade",
-  //   })
-  // }
+  Posts.associate = (models) => {
+    Posts.hasMany(models.Users, {
+      onDelete: "cascade",
+    })
+  } // Good
 
   
   return Posts

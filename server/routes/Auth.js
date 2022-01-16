@@ -4,6 +4,7 @@ const { Users } = require('../models')
 const bcrypt = require('bcrypt')
 const jsonwebtoken = require('jsonwebtoken')
 const jwt = require('express-jwt') // not used
+const cookieParser = require('cookie-parser')
 
 
 router.post("/registration", async (req, res) => {
@@ -45,7 +46,7 @@ router.post("/login", async (req, res) => {
           id: user.id
         }, "secret")
 
-        res.cookie('user', accessToken, {
+        res.cookie('jwt', accessToken, {
           httpOnly: true
         })
         // console.log(req.cookies)
@@ -60,9 +61,11 @@ router.post("/login", async (req, res) => {
 })
 
 router.get("/logout", async (req, res) => {
-  res.clearCookie('user', {
-    httpOnly: true,
-  })
+  res.clearCookie('jwt')
+  // res.cookie('jwt', '', {
+  //   httpOnly: true,
+  //   maxAge: 0
+  // })
   res.json({
     hello: "world"
   })

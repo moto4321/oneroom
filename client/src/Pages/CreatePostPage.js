@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
+import axios from 'axios'
 
 function CreatePostPage() {
 
@@ -11,8 +12,11 @@ function CreatePostPage() {
       title: title,
       description: description
     }
+    
+    axios.post("http://localhost:5000/post", body)
+      .then((response) => {
 
-    // api 설계
+      })
     
   }
 
@@ -22,7 +26,8 @@ function CreatePostPage() {
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
           <Form.Label>Title</Form.Label>
           <Form.Control 
-            onChange={(event) => {event.target.value}} 
+            // onChange={(event) => {event.target.value}} 
+            onChange={({ target: { value } }) => setTitle(value)}
             name="title" 
             type="text" 
             placeholder="Title" />
@@ -30,7 +35,8 @@ function CreatePostPage() {
         <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
           <Form.Label>Room description</Form.Label>
           <Form.Control 
-            onChange={(event) => {event.target.value}} 
+            // onChange={(event) => {event.target.value}} 
+            onChange={({ target: { value } }) => setDescription(value)}
             name="description" 
             as="textarea" 
             rows={3} />

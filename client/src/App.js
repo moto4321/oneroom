@@ -43,7 +43,7 @@ function App() {
               <Nav.Link href="/login">Login</Nav.Link>
               <Nav.Link href="/registration">Register</Nav.Link>
               <Nav.Link onClick={onLogoutHandler}>Logout</Nav.Link>
-              <Nav.Link href="/post">createPost</Nav.Link>
+              <Nav.Link href="/create-post">createPost</Nav.Link>
             </Nav>
           </Nav>
         </Container>
@@ -53,7 +53,7 @@ function App() {
           <Route exact path="/" element={<LandingPage />} />
           <Route exact path="/login" element={<LoginPage />} />
           <Route exact path="/registration" element={<RegistrationPage />} />
-          <Route exact path="/post" element={<CreatePostPage />} />
+          <Route exact path="/create-post" element={<CreatePostPage />} />
         </Routes>
       </Router>
     </div>

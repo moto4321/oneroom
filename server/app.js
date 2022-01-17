@@ -17,6 +17,8 @@ app.use(cors({
 
 const authRouter = require('./routes/Auth')
 app.use("/auth", authRouter)
+const postRouter = require('./routes/Post')
+app.use("/post", postRouter)
 
 // const postRouter = require('./routes/Post')
 // app.use("/post", postRouter)

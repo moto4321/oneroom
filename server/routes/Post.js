@@ -11,10 +11,11 @@ router.post("/", (req, res) => {
     return res.json({ error: "Description is required" })
   } else {
     // 정상 로직
-    Posts.Create()
+    Posts.Create({
+      title: title,
+      description: description
+    })
+    res.redirect("/")
   }
 
-  res.json({
-    
-  })
 })

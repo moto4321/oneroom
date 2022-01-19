@@ -15,7 +15,10 @@ function CreatePostPage() {
     
     axios.post("http://localhost:5000/post", body)
       .then((response) => {
-
+        console.log("success")
+      })
+      .catch((err) => {
+        console.log(err)
       })
     
   }

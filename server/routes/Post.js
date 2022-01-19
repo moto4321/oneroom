@@ -23,3 +23,5 @@ router.post("/", (req, res) => {
 router.get("/", async (req, res) => {
   const listOfPosts = Posts.findAll()
 })
+
+module.exports = router

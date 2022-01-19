@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const { Posts } = require('../models')
 
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
   const { title, description } = req.body
 
   if (!title) {
@@ -11,9 +11,10 @@ router.post("/", (req, res) => {
     return res.json({ error: "Description is required" })
   } else {
     // 정상 로직
-    Posts.Create({
+    await Posts.create({
       title: title,
-      description: description
+      description: description,
+      // UserId: 
     })
     res.redirect("/")
   }

@@ -23,7 +23,7 @@ function RegistrationPage() {
         } else {
             axios.post("http://localhost:5000/auth/registration", body)
             .then((response) => {
-                navigate.push("/login")
+                navigate("/login")
             })
         }
     }

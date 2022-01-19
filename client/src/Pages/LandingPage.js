@@ -1,12 +1,20 @@
 import axios from 'axios'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 function LandingPage() {
 
-  // useEffect(() => {
+  const [listOfPosts, setListOfPosts] = useState([])
 
-  // }, [])
-  // axios.get(`http://localhost:5000/post/byid${id}`)
+  useEffect(() => {
+
+  }, [])
+  axios.get(`http://localhost:5000/post`, {
+    headers: {
+      // cookie
+    }
+  }).then((response) => {
+    
+  })
 
   return (
     <div>

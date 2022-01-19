@@ -17,5 +17,9 @@ router.post("/", (req, res) => {
     })
     res.redirect("/")
   }
+})
 
+// middleware validate token 추가
+router.get("/", async (req, res) => {
+  const listOfPosts = Posts.findAll()
 })

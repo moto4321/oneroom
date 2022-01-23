@@ -1,36 +1,44 @@
 import React, { useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import axios from 'axios'
-import Cookies from 'universal-cookie';
+import Cookies from 'universal-cookie'
+import { useCookies } from "react-cookie";
 
-const cookies = new Cookies()
+// const cookies = new Cookies()
 
 function CreatePostPage() {
 
-  const accessToken = cookies.get('jwt')
-
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
+
+  const [cookies, setCookie] = useCookies('');
 
   const onCreateHandler = () => {
     let body = {
       title: title,
       description: description
     }
-    
+
     axios.post("http://localhost:5000/post", body, {
-      headers: {
-        // 쿠키 전달
-        'jwt': accessToken
-      }
+        headers: {
+          "Content-Type": "application/json",
+          jwt: cookies.jwt
+        }
     })
-      .then((response) => {
-        console.log("success")
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-    
+    .then((response) => {
+      console.log("success")
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+
+    // axios.post("http://localhost:5000/post", body, { withCredential: true })
+    // .then((response) => {
+    //   console.log('then')
+    // })
+    // .catch(() => {
+    //   console.log('catch')
+    // })
   }
 
   return (

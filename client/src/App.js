@@ -15,10 +15,11 @@ import {
 } from 'recoil';
 import { authState } from './state';
 import axios from 'axios';
+axios.defaults.withCredentials = true;
+
 
 function App() {
   const [loginState, setLoginState] = useRecoilState(authState)
-
 
   const onLogoutHandler = () => {
     axios.get("http://localhost:5000/auth/logout")

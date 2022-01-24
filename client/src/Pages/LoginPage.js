@@ -16,16 +16,12 @@ function LoginPage() {
             password: password
         }
         // console.log(body)
-        axios.post('http://localhost:5000/auth/login', body, {
-            // headers: {
-            //     'Content-Type': 'application/json'
-            // },
-            withCredentials: true
-        })
+        axios.post('http://localhost:5000/auth/login', body)
         .then((response) => {
             if (response.data.error) {
                 alert(response.data.error)
             } else {        
+                localStorage.setItem("token", response.data.token)
                 navigate("/")
             }
         })

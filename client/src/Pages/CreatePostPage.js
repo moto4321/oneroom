@@ -21,24 +21,15 @@ function CreatePostPage() {
 
     axios.post("http://localhost:5000/post", body, {
         headers: {
-          "Content-Type": "application/json",
-          jwt: cookies.jwt
+          token: localStorage.getItem("token")
         }
     })
     .then((response) => {
-      console.log("success")
+      console.log('success')
     })
     .catch((err) => {
       console.log(err)
     })
-
-    // axios.post("http://localhost:5000/post", body, { withCredential: true })
-    // .then((response) => {
-    //   console.log('then')
-    // })
-    // .catch(() => {
-    //   console.log('catch')
-    // })
   }
 
   return (

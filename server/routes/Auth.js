@@ -46,10 +46,6 @@ router.post("/login", async (req, res) => {
           id: user.id
         }, "secret")
 
-        res.cookie('jwt', accessToken, {
-          httpOnly: true
-        })
-        // console.log(req.cookies)
         res.json({
           token: accessToken,
           username: user.username,
@@ -59,19 +55,5 @@ router.post("/login", async (req, res) => {
     })
   }
 })
-
-router.get("/logout", async (req, res) => {
-  res.clearCookie('jwt')
-  // res.cookie('jwt', '', {
-  //   httpOnly: true,
-  //   maxAge: 0
-  // })
-  res.json({
-    hello: "world"
-  })
-})
-
-// router.use(jwt({ secret: "secret", algorithms: ['HS256'] }));
-
 
 module.exports = router

@@ -22,13 +22,8 @@ function App() {
   const [loginState, setLoginState] = useRecoilState(authState)
 
   const onLogoutHandler = () => {
-    axios.get("http://localhost:5000/auth/logout")
-    .then(response => {
-      console.log(response.data.hello)
-    })
-    .catch(error => {
-      console.log(error)
-    })
+    localStorage.removeItem("token")
+    // state 변경 recoil
   }
 
   return (

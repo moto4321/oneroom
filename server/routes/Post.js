@@ -1,26 +1,26 @@
 const express = require('express')
 const router = express.Router()
 const { Posts } = require('../models')
+const { verifiedToken } = require('../middlewares/authMiddleware')
 
 // 미들웨어 삽입
-router.post("/", async (req, res) => {
-  // const { title, description } = req.body
-  console.log(req.headers)
-  console.log(req.body)
+router.post("/", verifiedToken, async (req, res) => {
+  const { title, description } = req.body
+  // console.log(req.user) // { id: 1, iat: 1643025956 }
 
-  // if (!title) {
-  //   return res.json({ error: "title is required" })
-  // } else if (! description) {
-  //   return res.json({ error: "Description is required" })
-  // } else {
-  //   // 정상 로직
-  //   await Posts.create({
-  //     title: title,
-  //     description: description,
-  //     // UserId: 
-  //   })
-  //   res.redirect("/")
-  // }
+  if (!title) {
+    return res.json({ error: "title is required" })
+  } else if (! description) {
+    return res.json({ error: "Description is required" })
+  } else {
+    // 정상 로직
+    await Posts.create({
+      title: title,
+      description: description,
+      UserId: req.user.id 
+    })
+    res.redirect("/")
+  }
 })
 
 // middleware validate token 추가

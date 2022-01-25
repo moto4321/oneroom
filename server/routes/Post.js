@@ -3,7 +3,7 @@ const router = express.Router()
 const { Posts } = require('../models')
 const { verifiedToken } = require('../middlewares/authMiddleware')
 
-// 미들웨어 삽입
+// 포스트 생성
 router.post("/", verifiedToken, async (req, res) => {
   const { title, description } = req.body
   // console.log(req.user) // { id: 1, iat: 1643025956 }
@@ -19,13 +19,15 @@ router.post("/", verifiedToken, async (req, res) => {
       description: description,
       UserId: req.user.id 
     })
-    res.redirect("/")
+    // res.redirect("/") // 이건 왜 안되지?
+    res.json("success")
   }
 })
 
-// middleware validate token 추가
+// 랜딩페이지에서 모든 포스트 보여주기
 router.get("/", async (req, res) => {
-  const listOfPosts = Posts.findAll()
+  const listOfPosts = await Posts.findAll()
+  res.json({ listOfPosts: listOfPosts })
 })
 
 module.exports = router

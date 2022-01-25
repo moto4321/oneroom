@@ -11,7 +11,8 @@ const verifiedToken = (req, res, next) => {
     // 정상 로직
     try {
       const validToken = jwt.verify(accessToken, "secret")
-      // console.log(req)
+      // console.log(req.user)
+      console.log(validToken)
       req.user = validToken
       if (validToken) {
         next()

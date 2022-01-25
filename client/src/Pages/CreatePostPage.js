@@ -3,6 +3,7 @@ import { Button, Form } from 'react-bootstrap'
 import axios from 'axios'
 import Cookies from 'universal-cookie'
 import { useCookies } from "react-cookie";
+import { useNavigate } from 'react-router-dom'
 
 // const cookies = new Cookies()
 
@@ -12,6 +13,8 @@ function CreatePostPage() {
   const [description, setDescription] = useState('')
 
   const [cookies, setCookie] = useCookies('');
+
+  let navigate = useNavigate()
 
   const onCreateHandler = () => {
     let body = {
@@ -26,6 +29,7 @@ function CreatePostPage() {
     })
     .then((response) => {
       console.log('success')
+      navigate("/")
     })
     .catch((err) => {
       console.log(err)

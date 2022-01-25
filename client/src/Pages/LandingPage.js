@@ -6,19 +6,25 @@ function LandingPage() {
   const [listOfPosts, setListOfPosts] = useState([])
 
   useEffect(() => {
-
+    axios.get(`http://localhost:5000/post`)
+      .then((response) => {
+        setListOfPosts(response.data.listOfPosts)
+      }).catch((err) => {
+        console.log(err)
+      })
   }, [])
-  axios.get(`http://localhost:5000/post`, {
-    headers: {
-      // cookie
-    }
-  }).then((response) => {
-    
-  })
+
 
   return (
     <div>
-      This is Landing Page
+      {listOfPosts.map((post, key) => {
+        return(
+          <div>
+            <div>{post.title}</div>
+            <div>{post.description}</div>
+          </div>
+        )
+      })}
       
     </div>
   )

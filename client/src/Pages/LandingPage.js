@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import PostCard from './PostCard'
 
 function LandingPage() {
 
@@ -20,8 +21,12 @@ function LandingPage() {
       {listOfPosts.map((post, key) => {
         return(
           <div>
-            <div>{post.title}</div>
-            <div>{post.description}</div>
+            {/* <div>{post.title}</div>
+            <div>{post.description}</div> */}
+            <PostCard 
+              title={post.title}
+              description={post.description} 
+            />
           </div>
         )
       })}

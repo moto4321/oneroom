@@ -15,7 +15,8 @@ import {
 } from 'recoil';
 import { authState } from './state';
 import axios from 'axios';
-axios.defaults.withCredentials = true;
+import PostDetail from './Pages/PostDetail';
+// axios.defaults.withCredentials = true;
 
 
 function App() {
@@ -48,6 +49,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<LandingPage />} />
           <Route exact path="/login" element={<LoginPage />} />
+          <Route exact path="/post/:id" element={<PostDetail />} />
           <Route exact path="/registration" element={<RegistrationPage />} />
           <Route exact path="/create-post" element={<CreatePostPage />} />
         </Routes>

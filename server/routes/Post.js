@@ -30,4 +30,10 @@ router.get("/", async (req, res) => {
   res.json({ listOfPosts: listOfPosts })
 })
 
+router.get("/byid/:id", async (req, res) => {
+  const id = req.params.id
+  const post = await Posts.findOne({ where : { id: id } })
+  res.json({ post })
+})
+
 module.exports = router

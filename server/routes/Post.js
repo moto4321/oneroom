@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const { Posts } = require('../models')
 const { verifiedToken } = require('../middlewares/authMiddleware')
+const multer = require('multer')
 
 // 포스트 생성
 router.post("/", verifiedToken, async (req, res) => {
@@ -34,6 +35,37 @@ router.get("/byid/:id", async (req, res) => {
   const id = req.params.id
   const post = await Posts.findOne({ where : { id: id } })
   res.json({ post })
+})
+
+
+
+//=================================================
+// multer npm
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    // cb(null, 'uploads/')
+    cb(null, 'uploads/')
+  },
+  filename: function (req, file, cb) {
+    cb(null, `${Date.now()}_${file.originalname}`)
+  }
+})
+
+const upload = multer({ storage: storage }).single("file")
+//=================================================
+
+router.post("/images", (req, res) => {
+  console.log(req.header) 
+  upload(req, res, err => {
+    if (err) {
+      return res.json({ success: false, err })
+    }
+    return res.json({
+      success: true,
+      filePath: res.req.file.path,
+      fileName: res.req.file.filename 
+    })
+  })
 })
 
 module.exports = router

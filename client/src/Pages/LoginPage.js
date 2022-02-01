@@ -16,7 +16,7 @@ function LoginPage() {
             password: password
         }
         // console.log(body)
-        axios.post('http://localhost:5000/auth/login', body)
+        axios.post('http://localhost:3001/auth/login', body)
         .then((response) => {
             if (response.data.error) {
                 alert(response.data.error)
@@ -30,8 +30,16 @@ function LoginPage() {
 
 
     return (
-        <div>
-            <Form >
+        <div style={{ 
+            display: 'flex', 
+            flexDirection: 'column', 
+            width: '300px', 
+            alignItems: 'center',
+            margin: 'auto',
+            marginTop: '20vh'
+             }}
+        >
+            <Form>
                 <Form.Group className="mb-3" controlId="formGroupEmail">
                     <Form.Label>Email address</Form.Label>
                     <Form.Control

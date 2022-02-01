@@ -21,7 +21,7 @@ function RegistrationPage() {
         if (password !== password2) {
             alert("Password doesn't match")
         } else {
-            axios.post("http://localhost:5000/auth/registration", body)
+            axios.post("http://localhost:3001/auth/registration", body)
             .then((response) => {
                 navigate("/login")
             })
@@ -31,26 +31,62 @@ function RegistrationPage() {
 
 
     return (
-    <div>
-        <form>
-            <input 
-                name="email"
-                type="email" 
-                placeholder="email"
-                onChange={(event) => {setEmail(event.target.value)}} />
-            <input 
-                name="password" 
-                type="password" 
-                placeholder="Password" 
-                onChange={(event) => {setPassword(event.target.value)}} />
-            <input 
-                name="password2" 
-                type="password" 
-                placeholder="Type in Password again" 
-                onChange={(event) => {setPassword2(event.target.value)}} />
+    // <div>
+    //     <form>
+    //         <input 
+    //             name="email"
+    //             type="email" 
+    //             placeholder="email"
+    //             onChange={(event) => {setEmail(event.target.value)}} />
+    //         <input 
+    //             name="password" 
+    //             type="password" 
+    //             placeholder="Password" 
+    //             onChange={(event) => {setPassword(event.target.value)}} />
+    //         <input 
+    //             name="password2" 
+    //             type="password" 
+    //             placeholder="Type in Password again" 
+    //             onChange={(event) => {setPassword2(event.target.value)}} />
             
-        </form>
-        <button onClick={onRegisterHandler}>Sign up</button>
+    //     </form>
+    //     <button onClick={onRegisterHandler}>Sign up</button>
+    // </div>
+    <div style={{ 
+        display: 'flex', 
+        flexDirection: 'column', 
+        width: '300px', 
+        alignItems: 'center',
+        margin: 'auto',
+        marginTop: '20vh'
+         }}
+    >
+        <Form>
+            <Form.Group className="mb-3" controlId="formGroupEmail">
+                <Form.Label>Email address</Form.Label>
+                <Form.Control
+                    onChange={(event) => {setEmail(event.target.value)}} 
+                    type="email" 
+                    placeholder="Enter email" />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formGroupPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Control 
+                    onChange={(event) => {setPassword(event.target.value)}} 
+                    type="password" 
+                    placeholder="Password" />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formGroupPassword">
+                <Form.Label>Password Check</Form.Label>
+                <Form.Control 
+                    onChange={(event) => {setPassword2(event.target.value)}} 
+                    type="password" 
+                    placeholder="Password Check" />
+            </Form.Group>
+        </Form>
+        <Button onClick={onRegisterHandler} variant="primary" type="submit">
+            Sign Up
+        </Button>
     </div>
   )
 }

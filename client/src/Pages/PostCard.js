@@ -8,14 +8,14 @@ function PostCard(props) {
   let { id } = useParams()
 
   // useEffect(() => {
-  //   axios.get(`http://localhost:5000/post/byid/${id}`)
+  //   axios.get(`http://localhost:3001/post/byid/${id}`)
   //     .then((response) => {
         
   //     })
   // }, [])
 
   // const getDetail = (id) => {
-  //   axios.get(`http://localhost:5000/post/byid/${id}`)
+  //   axios.get(`http://localhost:3001/post/byid/${id}`)
   //     .then((response) => {
 
   //     })

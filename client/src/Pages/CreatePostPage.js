@@ -4,13 +4,13 @@ import axios from 'axios'
 import Cookies from 'universal-cookie'
 import { useCookies } from "react-cookie";
 import { useNavigate } from 'react-router-dom'
-
-// const cookies = new Cookies()
+import FileUpload from '../Components/utils/FileUpload';
 
 function CreatePostPage() {
 
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
+  const [images, setImages] = useState([])
 
   const [cookies, setCookie] = useCookies('');
 
@@ -22,7 +22,7 @@ function CreatePostPage() {
       description: description
     }
 
-    axios.post("http://localhost:5000/post", body, {
+    axios.post("http://localhost:3001/post", body, {
         headers: {
           token: localStorage.getItem("token")
         }
@@ -38,6 +38,7 @@ function CreatePostPage() {
 
   return (
     <div>
+      <FileUpload />
       <Form>
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
           <Form.Label>Title</Form.Label>

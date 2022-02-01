@@ -10,6 +10,7 @@ import {
   useRecoilValue,
 } from 'recoil'
 import { CookiesProvider } from "react-cookie";
+import './App.css'
 
 
 ReactDOM.render(

@@ -10,7 +10,7 @@ function PostDetail() {
   const [description, setDescription] = useState('')  
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/post/byid/${id}`)
+    axios.get(`http://localhost:3001/post/byid/${id}`)
       .then((response) => {
         setTitle(response.data.post.title)
         setDescription(response.data.post.description)

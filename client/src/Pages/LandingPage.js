@@ -10,7 +10,7 @@ function LandingPage() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/post`)
+    axios.get(`http://localhost:3001/post`)
       .then((response) => {
         setListOfPosts(response.data.listOfPosts)
       }).catch((err) => {
@@ -20,7 +20,7 @@ function LandingPage() {
 
   const onPostDetail = () => {
 
-    // axios.get(`http://localhost:5000/post/${id}`)
+    // axios.get(`http://localhost:3001/post/${id}`)
     //   .then(() => {
 
     //   })

@@ -43,7 +43,6 @@ router.get("/byid/:id", async (req, res) => {
 // multer npm
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    // cb(null, 'uploads/')
     cb(null, 'uploads/')
   },
   filename: function (req, file, cb) {
@@ -54,8 +53,8 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage }).single("file")
 //=================================================
 
-router.post("/images", (req, res) => {
-  console.log(req.header) 
+router.post("/images", (req, res) => { // post/images
+  // console.log(req.header) 
   upload(req, res, err => {
     if (err) {
       return res.json({ success: false, err })

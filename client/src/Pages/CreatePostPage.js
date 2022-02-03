@@ -37,7 +37,14 @@ function CreatePostPage() {
   }
 
   return (
-    <div>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        width: '800px',
+        margin: 'auto'
+      }}
+    >
       <FileUpload />
       <Form>
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -55,7 +62,8 @@ function CreatePostPage() {
             // onChange={(event) => {event.target.value}} 
             onChange={({ target: { value } }) => setDescription(value)}
             name="description" 
-            as="textarea" 
+            as="textarea"
+            placeholder='Description about the room'
             rows={3} />
         </Form.Group>
       </Form>

@@ -14,11 +14,12 @@ module.exports = (sequelize, DataTypes) => {
   })
 
 
-  // Posts.associate = (models) => {
-  //   Posts.hasMany(models.Users, {
-  //     onDelete: "cascade",
-  //   })
-  // } // Good?
+  Posts.associate = (models) => {
+
+    Posts.hasMany(models.Images, {
+      onDelete: "cascade",
+    })
+  }
 
   
   return Posts

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Dropzone from 'react-dropzone'
 import axios from 'axios'
 
-function FileUpload() {
+function FileUpload(props) {
 
   const [images, setImages] = useState([])
 
@@ -21,10 +21,21 @@ function FileUpload() {
       .then((response) => {
         if (response.data.success) {
           setImages([...images, response.data.filePath])
+          props.refreshFunction([...images, response.data.filePath])
         } else {
           alert('Failed to Save')
         }
       })
+  }
+
+  const deleteHandler = (image) => {
+    const currentIndex = images.indexOf(image)
+
+    let newImages = [...images]
+    newImages.splice(currentIndex, 1)
+
+    setImages(newImages)
+    props.refreshFunction(newImages)
   }
 
 
@@ -50,8 +61,9 @@ function FileUpload() {
             <img 
               style={{ minWidth: '300px', width: '300px', height: '240px' }}
               src={`http://localhost:3001/${image}`}
+              onClick={() => {deleteHandler(image)}}
             />
-            {console.log(image)}
+            {/* {console.log(image)} */}
           </div>
         ))}
       </div>

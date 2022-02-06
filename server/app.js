@@ -5,8 +5,10 @@ const db = require('./models')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
-const multer = require('multer');
+const multer = require('multer')
+const dotenv = require('dotenv')
 
+dotenv.config()
 app.use(express.json())
 app.use(cookieParser())
 // app.use(express.urlencoded({ extended: true }))

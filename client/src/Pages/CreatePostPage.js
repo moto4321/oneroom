@@ -12,7 +12,7 @@ function CreatePostPage() {
   const [description, setDescription] = useState('')
   const [images, setImages] = useState([])
 
-  const [cookies, setCookie] = useCookies('');
+  const [cookies, setCookie] = useCookies('')
 
   let navigate = useNavigate()
 
@@ -34,6 +34,13 @@ function CreatePostPage() {
     .catch((err) => {
       console.log(err)
     })
+
+    
+
+  }
+
+  const updateImages = (newImages) => {
+    setImages(newImages)
   }
 
   return (
@@ -45,7 +52,7 @@ function CreatePostPage() {
         margin: 'auto'
       }}
     >
-      <FileUpload />
+      <FileUpload refreshFunction={updateImages} />
       <Form>
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
           <Form.Label>Title</Form.Label>

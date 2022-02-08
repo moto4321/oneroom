@@ -1,17 +1,17 @@
 const express = require('express')
 const router = express.Router()
-const { Posts } = require('../models')
+const { Posts, Images } = require('../models')
 const { verifiedToken } = require('../middlewares/authMiddleware')
 const multer = require('multer')
 
 // 포스트 생성
 router.post("/", verifiedToken, async (req, res) => {
-  const { title, description } = req.body
+  const { title, description, images } = req.body
   // console.log(req.user) // { id: 1, iat: 1643025956 }
 
   if (!title) {
     return res.json({ error: "title is required" })
-  } else if (! description) {
+  } else if (!description) {
     return res.json({ error: "Description is required" })
   } else {
     // 정상 로직
@@ -21,7 +21,20 @@ router.post("/", verifiedToken, async (req, res) => {
       UserId: req.user.id 
     })
     // res.redirect("/") // 이건 왜 안되지?
-    res.json("success")
+    //res.json("success")
+
+    // Post를 get?
+    const post = await Posts.findOne({ 
+      where: { UserId: req.user.id },
+      order: [[ 'createdAt', 'DESC' ]]
+    })
+
+    for (let i = 0; i < images.length; i++) {
+      await Images.create({
+        image: images[i],
+        PostId: post.id
+      })
+    }
   }
 })
 

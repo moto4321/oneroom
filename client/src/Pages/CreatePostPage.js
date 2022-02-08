@@ -19,7 +19,8 @@ function CreatePostPage() {
   const onCreateHandler = () => {
     let body = {
       title: title,
-      description: description
+      description: description,
+      images: images
     }
 
     axios.post("http://localhost:3001/post", body, {
@@ -35,7 +36,6 @@ function CreatePostPage() {
       console.log(err)
     })
 
-    
 
   }
 

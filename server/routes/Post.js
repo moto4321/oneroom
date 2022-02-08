@@ -23,7 +23,7 @@ router.post("/", verifiedToken, async (req, res) => {
     // res.redirect("/") // 이건 왜 안되지?
     //res.json("success")
 
-    // Post를 get?
+    // 만들어진 Post를 get
     const post = await Posts.findOne({ 
       where: { UserId: req.user.id },
       order: [[ 'createdAt', 'DESC' ]]
@@ -35,6 +35,8 @@ router.post("/", verifiedToken, async (req, res) => {
         PostId: post.id
       })
     }
+    
+    res.json("success")
   }
 })
 
@@ -47,7 +49,14 @@ router.get("/", async (req, res) => {
 router.get("/byid/:id", async (req, res) => {
   const id = req.params.id
   const post = await Posts.findOne({ where : { id: id } })
-  res.json({ post })
+  const images = await Images.findAll({
+    where : { PostId: id}
+  })
+
+  res.json({
+    post,
+    images
+  })
 })
 
 

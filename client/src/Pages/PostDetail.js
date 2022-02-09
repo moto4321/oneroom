@@ -24,11 +24,13 @@ function PostDetail() {
   return (
     <div>
       <Card>
-        {images.map((image, index) => {
-          return(
-            <img src={image.image} onClick={() => {console.log(image.image)}}/>
-          )
-        })}
+        <div>
+          {images.map((image, index) => {
+            return(
+              <img style={{ maxWidth: '300px' }} src={"http://localhost:3001/" + image.image}/>
+            )
+          })}
+        </div>
         <Card.Body>{title}</Card.Body>
         <Card.Body>{description}</Card.Body>
       </Card>

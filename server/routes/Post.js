@@ -50,7 +50,7 @@ router.get("/byid/:id", async (req, res) => {
   const id = req.params.id
   const post = await Posts.findOne({ where : { id: id } })
   const images = await Images.findAll({
-    where : { PostId: id}
+    where : { PostId: id }
   })
 
   res.json({

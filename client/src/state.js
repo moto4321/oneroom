@@ -6,9 +6,7 @@ import {
   useRecoilValue,
 } from 'recoil'
 
-const authState = atom({
+export const authState = atom({
   key: "loginState",
-  default: false
+  default: null
 })
-
-export { authState }

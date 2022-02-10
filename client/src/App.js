@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './App.css';
 import { Navbar, Container, Nav } from 'react-bootstrap'
 import { BrowserRouter as Router, Route, Switch, Link, Routes } from 'react-router-dom'
@@ -20,28 +20,37 @@ import PostDetail from './Pages/PostDetail';
 
 
 function App() {
-  const [loginState, setLoginState] = useRecoilState(authState)
-
+  const [login, setLogin] = useRecoilState(authState)
+  const auth = useRecoilValue(authState)
+  
   const onLogoutHandler = () => {
     localStorage.removeItem("token")
+    setLogin(false)
     // state 변경 recoil
   }
+
 
   return (
     <div className="App">
       <Navbar bg="dark" variant="dark">
         <Container>
-          {/* <Navbar.Brand href="/">Navbar</Navbar.Brand> */}
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
           </Nav>
           <Nav>
-            <Nav className="ml-auto">
-              <Nav.Link href="/login">Login</Nav.Link>
-              <Nav.Link href="/registration">Register</Nav.Link>
-              <Nav.Link onClick={onLogoutHandler}>Logout</Nav.Link>
-              <Nav.Link href="/create-post">createPost</Nav.Link>
-            </Nav>
+            {
+              auth === false ? ( 
+                <Nav className="ml-auto">
+                  <Nav.Link href="/login">Login</Nav.Link>
+                  <Nav.Link href="/registration">Register</Nav.Link>
+                </Nav>
+              ) : (
+                <Nav className="ml-auto">
+                  <Nav.Link onClick={onLogoutHandler}>Logout</Nav.Link>
+                  <Nav.Link href="/create-post">createPost</Nav.Link>
+                </Nav>
+              )
+            }
           </Nav>
         </Container>
       </Navbar>

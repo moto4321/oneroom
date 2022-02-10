@@ -1,7 +1,16 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { Form, Button } from 'react-bootstrap'
+import {
+    RecoilRoot,
+    atom,
+    selector,
+    useRecoilState,
+    useRecoilValue,
+  } from 'recoil'
+import { authState } from '../state'
+  
 
 function LoginPage() {
 
@@ -9,6 +18,7 @@ function LoginPage() {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [login, setLogin] = useRecoilState(authState)
 
     const onSubmitHandler = () => {
         let body = {
@@ -22,12 +32,11 @@ function LoginPage() {
                 alert(response.data.error)
             } else {        
                 localStorage.setItem("token", response.data.token)
-                navigate("/")
+                setLogin(true)
+                navigate("/")               
             }
         })
     }
-
-
 
     return (
         <div style={{ 

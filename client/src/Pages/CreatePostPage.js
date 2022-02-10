@@ -5,6 +5,7 @@ import Cookies from 'universal-cookie'
 import { useCookies } from "react-cookie";
 import { useNavigate } from 'react-router-dom'
 import FileUpload from '../Components/utils/FileUpload';
+import { authState } from '../state'
 
 function CreatePostPage() {
 

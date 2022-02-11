@@ -19,6 +19,10 @@ module.exports = (sequelize, DataTypes) => {
     Posts.hasMany(models.Images, {
       onDelete: "cascade",
     })
+
+    Posts.hasMany(models.Comments, {
+      onDelete: "cascade"
+    })
   }
 
   

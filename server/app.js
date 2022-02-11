@@ -29,9 +29,10 @@ app.use("/uploads", express.static('uploads'))
 
 const authRouter = require('./routes/Auth')
 app.use("/auth", authRouter)
-
 const postRouter = require('./routes/Post')
 app.use("/post", postRouter)
+const commentRouter = require('./routes/Comment')
+app.use("/comment", commentRouter)
 
 
 

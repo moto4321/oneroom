@@ -9,7 +9,8 @@ function PostDetail() {
   const [title, setTitle] = useState('')  
   const [description, setDescription] = useState('')  
   const [images, setImages] = useState([])
-  const [comment, setComment] = useState('')
+  const [comments, setComments] = useState([])
+  const [newComment, setNewComment] = useState('')
 
   useEffect(() => {
     axios.get(`http://localhost:3001/post/byid/${id}`)
@@ -17,21 +18,26 @@ function PostDetail() {
         setImages(response.data.images)
         setTitle(response.data.post.title)
         setDescription(response.data.post.description)
+        setComments(response.data.comments)
       })
-  }, [])
+  }, [newComment])
 
   const createCommentHandler = () => {
-    let body = {
-      comment: comment
-    }
-
-    axios.post("http://localhost:3001/comment", body, {
+    axios.post("http://localhost:3001/comment",
+    {
+      newComment: newComment,
+      PostId: id
+    }, 
+    {
       headers: {
         token: localStorage.getItem("token")
       }
     })
     .then((response) => {
-      console.log(response.data)
+      if (response.data === 'success') {
+        setComments([...comments, newComment])
+        setNewComment("")
+      }
     })
   }
 
@@ -55,7 +61,8 @@ function PostDetail() {
           placeholder="Comments..."
           aria-label="Recipient's username"
           aria-describedby="basic-addon2"
-          onChange={(event) => { setComment(event.target.value) }}
+          value={newComment}
+          onChange={(event) => { setNewComment(event.target.value) }}
         />
         <Button 
           variant="outline-secondary" 
@@ -65,11 +72,12 @@ function PostDetail() {
           Comment
         </Button>
       </InputGroup>
-      <ListGroup variant="flush">
-        <ListGroup.Item>Cras justo odio</ListGroup.Item>
-        <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
-        <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
-      </ListGroup>
+      <hr />
+      {/* <ListGroup variant="flush"> */}
+        {comments.map((comment, index) => {
+          return (<div>{comment.comment}</div>)
+        })}
+      {/* </ListGroup> */}
     </div>
   )
 }

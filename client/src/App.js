@@ -14,7 +14,6 @@ import {
   useRecoilValue, useSetRecoilState, useResetRecoilState 
 } from 'recoil';
 import { authState } from './state';
-import axios from 'axios';
 import PostDetail from './Pages/PostDetail';
 // axios.defaults.withCredentials = true;
 
@@ -29,6 +28,10 @@ function App() {
     // state 변경 recoil
   }
 
+  useEffect(() => {
+    
+  })
+
 
   return (
     <div className="App">
@@ -38,7 +41,7 @@ function App() {
             <Nav.Link href="/">Home</Nav.Link>
           </Nav>
           <Nav>
-            {
+            {/* {
               auth === false ? ( 
                 <Nav className="ml-auto">
                   <Nav.Link href="/login">Login</Nav.Link>
@@ -50,7 +53,13 @@ function App() {
                   <Nav.Link href="/create-post">createPost</Nav.Link>
                 </Nav>
               )
-            }
+            } */}
+            <Nav className="ml-auto">
+              <Nav.Link href="/login">Login</Nav.Link>
+              <Nav.Link href="/registration">Register</Nav.Link>
+              <Nav.Link onClick={onLogoutHandler}>Logout</Nav.Link>
+              <Nav.Link href="/create-post">createPost</Nav.Link>
+            </Nav>
           </Nav>
         </Container>
       </Navbar>

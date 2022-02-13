@@ -1,17 +1,17 @@
 const express = require('express')
 const router = express.Router()
 const { Posts, Comments } = require('../models')
-const { validateToken } = require('../middlewares/authMiddleware')
+const { verifiedToken } = require('../middlewares/authMiddleware')
 
-router.post("/", validateToken, async (req, res) => {
-  const { comment } = req.body
-  
-  if (!comment) {
+router.post("/", verifiedToken, async (req, res) => {
+  const { newComment, PostId } = req.body
+  // console.log(req.body)
+  if (!newComment) {
     res.json({ error: 'Comment is required' })
   } else {
     await Comments.create({
-      comment: comment,
-      PostId: 
+      comment: newComment,
+      PostId: PostId
     })
 
     res.json("success")

@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { Posts, Images } = require('../models')
+const { Posts, Images, Comments } = require('../models')
 const { verifiedToken } = require('../middlewares/authMiddleware')
 const multer = require('multer')
 
@@ -52,9 +52,14 @@ router.get("/byid/:id", async (req, res) => {
     where : { PostId: id }
   })
 
+  const comments = await Comments.findAll({
+    where : { PostId: id }
+  })
+
   res.json({
     post,
-    images
+    images,
+    comments
   })
 })
 

@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import axios from 'axios'
 import Cookies from 'universal-cookie'
 import { useCookies } from "react-cookie";
 import { useNavigate } from 'react-router-dom'
 import FileUpload from '../Components/utils/FileUpload';
-import { authState } from '../state'
+import { AuthContext } from '../Components/utils/AuthContext'
 
 function CreatePostPage() {
 
@@ -13,7 +13,7 @@ function CreatePostPage() {
   const [description, setDescription] = useState('')
   const [images, setImages] = useState([])
 
-  const [cookies, setCookie] = useCookies('')
+  const { authState } = useContext(AuthContext)
 
   let navigate = useNavigate()
 
@@ -31,6 +31,7 @@ function CreatePostPage() {
     })
     .then((response) => {
       console.log('success')
+      // console.log(response.data.us) // { id: 1, iat: 숫자수자어쩌구.. }
       navigate("/")
     })
     .catch((err) => {

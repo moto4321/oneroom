@@ -36,6 +36,7 @@ router.post("/", verifiedToken, async (req, res) => {
     }
     
     res.json("success")
+    // res.json({ 'us' : req.user })
   }
 })
 

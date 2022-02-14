@@ -1,11 +1,14 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import PostCard from './PostCard'
 import { useNavigate } from 'react-router-dom'
+import { Button } from 'react-bootstrap'
+import { AuthContext } from '../Components/utils/AuthContext'
 
 function LandingPage() {
 
   const [listOfPosts, setListOfPosts] = useState([])
+  const { authState } = useContext(AuthContext)
 
   const navigate = useNavigate()
 
@@ -18,28 +21,24 @@ function LandingPage() {
       })
   }, [])
 
-  const onPostDetail = () => {
 
-    // axios.get(`http://localhost:3001/post/${id}`)
-    //   .then(() => {
-
-    //   })
-    //   .catch(() => {
-
-    //   })
+  const postDeleteHandler = () => {
+    // axios.delete()
   }
 
   return (
     <div>
       {listOfPosts.map((post, key) => {
         return(
-          <div onClick={() => { navigate(`/post/${post.id}`) }}>
-            {/* <div>{post.title}</div>
-            <div>{post.description}</div> */}
-            <PostCard 
-              title={post.title}
-              description={post.description} 
-            />
+          <div>
+            <div onClick={() => { navigate(`/post/${post.id}`) }}>
+              <PostCard 
+                title={post.title}
+                description={post.description} 
+              />
+            </div>
+            <Button onClick={postDeleteHandler} variant='danger'>Delete</Button>
+            <hr />
           </div>
         )
       })}

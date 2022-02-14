@@ -5,7 +5,12 @@ const bcrypt = require('bcrypt')
 const jsonwebtoken = require('jsonwebtoken')
 const jwt = require('express-jwt') // not used
 const cookieParser = require('cookie-parser')
+const { verifiedToken } = require('../middlewares/authMiddleware')
 
+router.get("/", verifiedToken, (req, res) => {
+  console.log('hihi' + req.user)
+  res.json(req.user)
+})
 
 router.post("/registration", async (req, res) => {
   const { email, password } = req.body

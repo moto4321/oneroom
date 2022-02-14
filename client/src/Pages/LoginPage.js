@@ -1,15 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { Form, Button } from 'react-bootstrap'
-import {
-    RecoilRoot,
-    atom,
-    selector,
-    useRecoilState,
-    useRecoilValue,
-  } from 'recoil'
-import { authState } from '../state'
+import { AuthContext } from '../Components/utils/AuthContext'
   
 
 function LoginPage() {
@@ -18,7 +11,7 @@ function LoginPage() {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [login, setLogin] = useRecoilState(authState)
+    const { setAuthState } = useContext(AuthContext) 
 
     const onSubmitHandler = () => {
         let body = {
@@ -30,10 +23,13 @@ function LoginPage() {
         .then((response) => {
             if (response.data.error) {
                 alert(response.data.error)
-            } else {        
+            } else {
                 localStorage.setItem("token", response.data.token)
-                setLogin(true)
-                navigate("/")               
+                setAuthState({
+                    id: response.data.id, 
+                    status: true
+                })
+                navigate("/")           
             }
         })
     }

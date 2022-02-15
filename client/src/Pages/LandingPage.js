@@ -21,11 +21,6 @@ function LandingPage() {
       })
   }, [])
 
-
-  const postDeleteHandler = () => {
-    // axios.delete()
-  }
-
   return (
     <div>
       {listOfPosts.map((post, key) => {
@@ -37,7 +32,7 @@ function LandingPage() {
                 description={post.description} 
               />
             </div>
-            <Button onClick={postDeleteHandler} variant='danger'>Delete</Button>
+            {/* <Button onClick={postDeleteHandler} variant='danger'>Delete</Button> */}
             <hr />
           </div>
         )

@@ -14,6 +14,7 @@ router.post("/", verifiedToken, async (req, res) => {
   } else if (!description) {
     return res.json({ error: "Description is required" })
   } else {
+    console.log('정상로직')
     // 정상 로직
     await Posts.create({
       title: title,
@@ -92,6 +93,17 @@ router.post("/images", (req, res) => { // post/images
       fileName: res.req.file.filename 
     })
   })
+})
+
+router.delete("/:id", async (req, res) => {
+  const id = req.params.id
+
+  await Posts.destroy({
+    where : {
+      id : id
+    }
+  })
+  res.json("Deleted Successfully")
 })
 
 module.exports = router

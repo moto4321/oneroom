@@ -8,7 +8,6 @@ const cookieParser = require('cookie-parser')
 const { verifiedToken } = require('../middlewares/authMiddleware')
 
 router.get("/", verifiedToken, (req, res) => {
-  console.log('hihi' + req.user)
   res.json(req.user)
 })
 

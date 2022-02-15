@@ -9,6 +9,7 @@ import CreatePostPage from './Pages/CreatePostPage';
 import { AuthContext } from './Components/utils/AuthContext'
 import PostDetail from './Pages/PostDetail';
 import axios from 'axios';
+// import { useNavigate } from 'react-router-dom'
 // axios.defaults.withCredentials = true;
 
 
@@ -17,6 +18,8 @@ function App() {
     id: 0,
     status: false,
   })
+
+  // let navigate = useNavigate()
 
   useEffect(() => {
     axios.get("http://localhost:3001/auth", {
@@ -42,6 +45,7 @@ function App() {
   const onLogoutHandler = () => {
     localStorage.removeItem("token")
     setAuthState({ id: 0, status: false })
+    // navigate("/")
   }
 
   return (
@@ -56,13 +60,13 @@ function App() {
               <Nav>
                 {!authState.status ? (
                 <Nav className="ml-auto">
-                <Nav.Link href="/login">Login</Nav.Link>
-                <Nav.Link href="/registration">Register</Nav.Link>
+                  <Nav.Link href="/login">Login</Nav.Link>
+                  <Nav.Link href="/registration">Register</Nav.Link>
                 </Nav>
                 ) : (
                 <Nav className="ml-auto">
-                <Nav.Link onClick={onLogoutHandler}>Logout</Nav.Link>
-                <Nav.Link href="/create-post">createPost</Nav.Link>
+                  <Nav.Link onClick={onLogoutHandler}>Logout</Nav.Link>
+                  <Nav.Link href="/create-post">createPost</Nav.Link>
                 </Nav>
                 )}
               </Nav>

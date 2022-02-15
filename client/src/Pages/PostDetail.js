@@ -1,7 +1,8 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Card, ListGroup, InputGroup, FormControl, Button } from 'react-bootstrap'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { AuthContext } from '../Components/utils/AuthContext'
 
 function PostDetail() {
 
@@ -11,6 +12,11 @@ function PostDetail() {
   const [images, setImages] = useState([])
   const [comments, setComments] = useState([])
   const [newComment, setNewComment] = useState('')
+  const [post, setPost] = useState({})
+
+  const { authState } = useContext(AuthContext)
+
+  let navigate = useNavigate()
 
   useEffect(() => {
     axios.get(`http://localhost:3001/post/byid/${id}`)
@@ -19,7 +25,18 @@ function PostDetail() {
         setTitle(response.data.post.title)
         setDescription(response.data.post.description)
         setComments(response.data.comments)
+        setPost(response.data.post)
       })
+
+    // axios.get(`http://localhost:3001/auth`, {
+    //   headers: {
+    //     accessToken: localStorage.getItem('token')
+    //   }
+    // })
+    // .then((response) => {
+    //   // console.log(response.data) //{ id: 2, iat: 124135315 }
+      
+    // })
   }, [newComment])
 
   const createCommentHandler = () => {
@@ -30,7 +47,7 @@ function PostDetail() {
     }, 
     {
       headers: {
-        token: localStorage.getItem("token")
+        accessToken: localStorage.getItem("token")
       }
     })
     .then((response) => {
@@ -40,6 +57,20 @@ function PostDetail() {
       }
     })
   }
+
+  const deletePost = () => {
+    axios.delete(`http://localhost:3001/post/${id}`)
+    .then((response) => {
+      if (response.data.error) {
+        console.log(response.data.error)
+      } else {
+        navigate("/")
+      }
+      
+    })
+    // console.log(id)
+  }
+
 
 
   return (
@@ -54,6 +85,9 @@ function PostDetail() {
         </div>
         <Card.Body>Title : {title}</Card.Body>
         <Card.Body>Description : {description}</Card.Body>
+        {authState.id === post.UserId ? (
+        <Button onClick={deletePost} variant='danger'>Delete</Button>
+        ) : null}
       </Card>
       <br />
       <InputGroup className="mb-3">

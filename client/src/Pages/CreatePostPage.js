@@ -26,7 +26,7 @@ function CreatePostPage() {
 
     axios.post("http://localhost:3001/post", body, {
         headers: {
-          token: localStorage.getItem("token")
+          accessToken: localStorage.getItem("token")
         }
     })
     .then((response) => {

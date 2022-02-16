@@ -11,12 +11,41 @@ router.post("/", verifiedToken, async (req, res) => {
   } else {
     await Comments.create({
       comment: newComment,
-      PostId: PostId
+      PostId: PostId,
+      UserId: req.user.id
     })
 
     res.json("success")
   }
 
+})
+
+router.delete("/:id", async (req, res) => {
+  const id = req.params.id // comment id
+
+  // const comment = await Comments.findOne({
+  //   where : {
+  //     id: id
+  //   }
+  // })
+
+  // const postId = comment.PostId
+
+  await Comments.destroy({
+    where : {
+      id : id
+    }
+  })
+
+  // const comments = await Comments.findAll({
+  //   where : {
+  //     PostId: postId
+  //   }
+  // })
+
+  // res.json(comments)
+
+  res.json("Comments deleted")
 })
 
 module.exports = router

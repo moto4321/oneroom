@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { Card, ListGroup, InputGroup, FormControl, Button } from 'react-bootstrap'
+import { responsivePropType } from 'react-bootstrap/esm/createUtilityClasses';
 import { useNavigate, useParams } from 'react-router-dom';
 import { AuthContext } from '../Components/utils/AuthContext'
 
@@ -68,9 +69,19 @@ function PostDetail() {
       }
       
     })
-    // console.log(id)
   }
 
+  const deleteComment = (id) => {
+    axios.delete(`http://localhost:3001/comment/${id}`)
+    .then((response) => {
+      setComments(
+        comments.filter((val) => {
+          return val.id != id
+        })
+      )
+      // setComments(response.data.comment)
+    })
+  }
 
 
   return (
@@ -109,7 +120,21 @@ function PostDetail() {
       <hr />
       {/* <ListGroup variant="flush"> */}
         {comments.map((comment, index) => {
-          return (<div>{comment.comment}</div>)
+          return (
+            <div>
+              {comment.comment}
+              {/* {console.log(comment)} */}
+              {comment.UserId === authState.id ? (
+                <Button 
+                  variant="danger" 
+                  size="sm"
+                  onClick={() => {deleteComment(comment.id)}}
+                >
+                  Delete
+                </Button>
+              ) : null}
+            </div>
+          )
         })}
       {/* </ListGroup> */}
     </div>

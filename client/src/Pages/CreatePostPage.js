@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import axios from 'axios'
 import Cookies from 'universal-cookie'
@@ -7,15 +7,30 @@ import { useNavigate } from 'react-router-dom'
 import FileUpload from '../Components/utils/FileUpload';
 import { AuthContext } from '../Components/utils/AuthContext'
 
-function CreatePostPage() {
+function CreatePostPage(props) {
 
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [images, setImages] = useState([])
 
+  const [storedTitle, setStoredTitle] = useState('')
+  const [storedDesc, setStoredDesc] = useState('')
+
   const { authState } = useContext(AuthContext)
 
   let navigate = useNavigate()
+
+  useEffect(() => {
+    // if (props.editPost) {
+    //   setTitle(props.storedTitle)
+    //   setDescription(props.storedDesc)
+    // }
+    setStoredTitle(props.storedTitle)
+    setStoredDesc(props.storedDesc)
+    // console.log(props.editPost)
+    // console.log(props.storedTitle)
+    // console.log(props.storedDesc)
+  }, [])
 
   const onCreateHandler = () => {
     let body = {
@@ -37,7 +52,6 @@ function CreatePostPage() {
     .catch((err) => {
       console.log(err)
     })
-
 
   }
 
@@ -62,6 +76,7 @@ function CreatePostPage() {
             // onChange={(event) => {event.target.value}} 
             onChange={({ target: { value } }) => setTitle(value)}
             name="title" 
+            defaultValue={storedTitle}
             type="text" 
             placeholder="Title" />
         </Form.Group>
@@ -71,6 +86,7 @@ function CreatePostPage() {
             // onChange={(event) => {event.target.value}} 
             onChange={({ target: { value } }) => setDescription(value)}
             name="description" 
+            defaultValue={storedDesc}
             as="textarea"
             placeholder='Description about the room'
             rows={3} />

@@ -106,4 +106,19 @@ router.delete("/:id", async (req, res) => {
   res.json("Deleted Successfully")
 })
 
+router.get("/edit/:id", async (req, res) => {
+  const id = req.params.id
+
+  const post = await Posts.findOne({
+    where: {
+      id: id
+    }
+  })
+  // console.log(post)
+  res.json({
+    post
+  })
+  // console.log(id) // 8
+})
+
 module.exports = router

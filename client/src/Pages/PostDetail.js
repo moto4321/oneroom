@@ -4,6 +4,7 @@ import { Card, ListGroup, InputGroup, FormControl, Button } from 'react-bootstra
 import { responsivePropType } from 'react-bootstrap/esm/createUtilityClasses';
 import { useNavigate, useParams } from 'react-router-dom';
 import { AuthContext } from '../Components/utils/AuthContext'
+import CreatePostPage from '../Pages/CreatePostPage';
 
 function PostDetail() {
 
@@ -14,6 +15,12 @@ function PostDetail() {
   const [comments, setComments] = useState([])
   const [newComment, setNewComment] = useState('')
   const [post, setPost] = useState({})
+
+
+  const [editPost, setEditPost] = useState(false)
+  const [storedTitle, setStoredTitle] = useState('')
+  const [storedDesc, setStoredDesc] = useState('')
+
 
   const { authState } = useContext(AuthContext)
 
@@ -67,7 +74,6 @@ function PostDetail() {
       } else {
         navigate("/")
       }
-      
     })
   }
 
@@ -75,68 +81,93 @@ function PostDetail() {
     axios.delete(`http://localhost:3001/comment/${id}`)
     .then((response) => {
       setComments(
-        comments.filter((val) => {
-          return val.id != id
+        comments.filter((value) => {
+          return value.id != id
         })
       )
-      // setComments(response.data.comment)
+    })
+  }
+
+  const editPostHandler = () => {
+    axios.get(`http://localhost:3001/post/edit/${id}`)
+    .then((response) => {
+      if (response.data.error) {
+        console.log(response.data.error)
+      } else {
+        setStoredTitle(response.data.post.title)
+        setStoredDesc(response.data.post.description)
+        setEditPost(true)
+      }
     })
   }
 
 
   return (
     <div>
-      <Card>
-        <div>
-          {images.map((image, index) => {
-            return(
-              <img style={{ maxWidth: '300px' }} src={"http://localhost:3001/" + image.image}/>
+      {editPost ? (
+        <CreatePostPage 
+          editPost={editPost}
+          storedTitle={storedTitle} 
+          storedDesc={storedDesc}
+        />
+      ) : ( 
+      <div>
+        <Card>
+          <div>
+            {images.map((image, index) => {
+              return(
+                <img style={{ maxWidth: '300px' }} src={"http://localhost:3001/" + image.image}/>
+              )
+            })}
+          </div>
+          <Card.Body>Title : {title}</Card.Body>
+          <Card.Body>Description : {description}</Card.Body>
+          {authState.id === post.UserId ? (
+            <div>
+              <Button onClick={editPostHandler} variant='success'>Edit Post</Button>
+              <Button onClick={deletePost} variant='danger'>Delete Post</Button>
+            </div>
+          ) : null}
+        </Card>
+        <br />
+        <InputGroup className="mb-3">
+          <FormControl
+            placeholder="Comments..."
+            aria-label="Recipient's username"
+            aria-describedby="basic-addon2"
+            value={newComment}
+            onChange={(event) => { setNewComment(event.target.value) }}
+          />
+          <Button 
+            variant="outline-secondary" 
+            id="button-addon2"
+            onClick={createCommentHandler}
+          >  
+            Comment
+          </Button>
+        </InputGroup>
+        <hr />
+        {/* <ListGroup variant="flush"> */}
+          {comments.map((comment, index) => {
+            return (
+              <div>
+                {comment.comment}
+                {/* {console.log(comment)} */}
+                {comment.UserId === authState.id ? (
+                  <Button 
+                    variant="danger" 
+                    size="sm"
+                    onClick={() => {deleteComment(comment.id)}}
+                  >
+                    Delete
+                  </Button>
+                ) : null}
+              </div>
             )
           })}
-        </div>
-        <Card.Body>Title : {title}</Card.Body>
-        <Card.Body>Description : {description}</Card.Body>
-        {authState.id === post.UserId ? (
-        <Button onClick={deletePost} variant='danger'>Delete</Button>
-        ) : null}
-      </Card>
-      <br />
-      <InputGroup className="mb-3">
-        <FormControl
-          placeholder="Comments..."
-          aria-label="Recipient's username"
-          aria-describedby="basic-addon2"
-          value={newComment}
-          onChange={(event) => { setNewComment(event.target.value) }}
-        />
-        <Button 
-          variant="outline-secondary" 
-          id="button-addon2"
-          onClick={createCommentHandler}
-        >  
-          Comment
-        </Button>
-      </InputGroup>
-      <hr />
-      {/* <ListGroup variant="flush"> */}
-        {comments.map((comment, index) => {
-          return (
-            <div>
-              {comment.comment}
-              {/* {console.log(comment)} */}
-              {comment.UserId === authState.id ? (
-                <Button 
-                  variant="danger" 
-                  size="sm"
-                  onClick={() => {deleteComment(comment.id)}}
-                >
-                  Delete
-                </Button>
-              ) : null}
-            </div>
-          )
-        })}
-      {/* </ListGroup> */}
+        {/* </ListGroup> */}
+      </div>
+    )}
     </div>
   )
 }

@@ -121,4 +121,42 @@ router.get("/edit/:id", async (req, res) => {
   // console.log(id) // 8
 })
 
+router.put("/edit/:id", verifiedToken, async (req, res) => {
+  const postId = req.params.id
+  // let title = req.body.title
+  // let description = req.body.description
+  // let image
+  let { title, description, images } = req.body
+
+  const post = await Posts.findOne({ where : { id : postId }})
+  //const image = await Images.findAll({ where : { postId : postId }})
+
+  if (!title) {
+    title = post.title
+  } else if (!description) {
+    description = post.description
+  } 
+
+  await Posts.update({ title: title, description: description}, {
+    where: {
+      id: postId
+    }
+  })  
+
+  await Images.destroy({
+    where : {
+      PostId: postId
+    }
+  })
+
+  for (let i = 0; i < images.length; i++) {
+    await Images.create({
+      image: images[i],
+      PostId: postId
+    })
+  }
+
+  res.json({postId})
+})
+
 module.exports = router

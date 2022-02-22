@@ -3,15 +3,18 @@ import { Button, Form } from 'react-bootstrap'
 import axios from 'axios'
 import Cookies from 'universal-cookie'
 import { useCookies } from "react-cookie";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import FileUpload from '../Components/utils/FileUpload';
 import { AuthContext } from '../Components/utils/AuthContext'
 
 function CreatePostPage(props) {
 
+  let { id } = useParams()
+
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [images, setImages] = useState([])
+
 
   const [storedTitle, setStoredTitle] = useState('')
   const [storedDesc, setStoredDesc] = useState('')
@@ -21,38 +24,46 @@ function CreatePostPage(props) {
   let navigate = useNavigate()
 
   useEffect(() => {
-    // if (props.editPost) {
-    //   setTitle(props.storedTitle)
-    //   setDescription(props.storedDesc)
-    // }
     setStoredTitle(props.storedTitle)
     setStoredDesc(props.storedDesc)
-    // console.log(props.editPost)
-    // console.log(props.storedTitle)
-    // console.log(props.storedDesc)
   }, [])
 
   const onCreateHandler = () => {
     let body = {
+      images: images,
       title: title,
-      description: description,
-      images: images
+      description: description
     }
-
-    axios.post("http://localhost:3001/post", body, {
+    
+    if (props.editPost) {
+      
+      axios.put(`http://localhost:3001/post/edit/${id}`, body, {
         headers: {
           accessToken: localStorage.getItem("token")
         }
-    })
-    .then((response) => {
-      console.log('success')
-      // console.log(response.data.us) // { id: 1, iat: 숫자수자어쩌구.. }
-      navigate("/")
-    })
-    .catch((err) => {
-      console.log(err)
-    })
+      })
+      .then((response) => {
+        // navigate(`/post/${response.data.postId}`)
+        navigate("/")
+      })
 
+
+    } else {
+
+      axios.post("http://localhost:3001/post", body, {
+          headers: {
+            accessToken: localStorage.getItem("token")
+          }
+      })
+      .then((response) => {
+        console.log('success')
+        // console.log(response.data.us) // { id: 1, iat: 숫자수자어쩌구.. }
+        navigate("/")
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    }
   }
 
   const updateImages = (newImages) => {

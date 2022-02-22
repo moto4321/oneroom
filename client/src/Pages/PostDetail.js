@@ -20,6 +20,7 @@ function PostDetail() {
   const [editPost, setEditPost] = useState(false)
   const [storedTitle, setStoredTitle] = useState('')
   const [storedDesc, setStoredDesc] = useState('')
+  const [storedImages, setStoredImages] = useState([])
 
 
   const { authState } = useContext(AuthContext)
@@ -96,6 +97,7 @@ function PostDetail() {
       } else {
         setStoredTitle(response.data.post.title)
         setStoredDesc(response.data.post.description)
+        // setStoredImages(response.data.images)
         setEditPost(true)
       }
     })

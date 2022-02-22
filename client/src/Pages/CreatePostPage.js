@@ -18,6 +18,7 @@ function CreatePostPage(props) {
 
   const [storedTitle, setStoredTitle] = useState('')
   const [storedDesc, setStoredDesc] = useState('')
+  const [storedImages, setStoredImages] = useState([])
 
   const { authState } = useContext(AuthContext)
 

@@ -114,11 +114,16 @@ router.get("/edit/:id", async (req, res) => {
       id: id
     }
   })
-  // console.log(post)
+
+  const images = await Images.findAll({ where: {
+    PostId: id
+  } })
+
   res.json({
-    post
+    post,
+    images
   })
-  // console.log(id) // 8
+
 })
 
 router.put("/edit/:id", verifiedToken, async (req, res) => {
@@ -133,7 +138,9 @@ router.put("/edit/:id", verifiedToken, async (req, res) => {
 
   if (!title) {
     title = post.title
-  } else if (!description) {
+  }
+  
+  if (!description) {
     description = post.description
   } 
 

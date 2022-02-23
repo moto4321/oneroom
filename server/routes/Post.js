@@ -3,6 +3,8 @@ const router = express.Router()
 const { Posts, Images, Comments } = require('../models')
 const { verifiedToken } = require('../middlewares/authMiddleware')
 const multer = require('multer')
+const { response } = require('express')
+const fs = require('fs')
 
 // 포스트 생성
 router.post("/", verifiedToken, async (req, res) => {
@@ -98,11 +100,25 @@ router.post("/images", (req, res) => { // post/images
 router.delete("/:id", async (req, res) => {
   const id = req.params.id
 
+  const temp_images = await Images.findAll({
+    where: {
+      PostId: id
+    }
+  })
+
+  for (let i = 0; i < temp_images.length; i++) {
+    // temp_list.append(temp_images[i]['dataValues']['image'])
+    fs.unlink('./' + temp_images[i]['dataValues']['image'], (err) => {
+      console.log('err')
+    })
+  }
+
   await Posts.destroy({
     where : {
       id : id
     }
   })
+
   res.json("Deleted Successfully")
 })
 
@@ -115,9 +131,11 @@ router.get("/edit/:id", async (req, res) => {
     }
   })
 
-  const images = await Images.findAll({ where: {
-    PostId: id
-  } })
+  const images = await Images.findAll({ 
+    where: {
+      PostId: id
+    } 
+  })
 
   res.json({
     post,
@@ -139,7 +157,7 @@ router.put("/edit/:id", verifiedToken, async (req, res) => {
   if (!title) {
     title = post.title
   }
-  
+
   if (!description) {
     description = post.description
   } 
@@ -150,11 +168,32 @@ router.put("/edit/:id", verifiedToken, async (req, res) => {
     }
   })  
 
+  //
+  const temp_images = await Images.findAll({
+    where: {
+      PostId: postId
+    }
+  })
+
+  // console.log(temp_images[0].dataValues) //
+  // console.log(temp_images[0]['dataValues']['image'])
+  let temp_list = []
+  for (let i = 0; i < temp_images.length; i++) {
+    // temp_list.append(temp_images[i]['dataValues']['image'])
+    fs.unlink('./' + temp_images[i]['dataValues']['image'], (err) => {
+      console.log('err')
+    })
+  }
+
+
   await Images.destroy({
     where : {
       PostId: postId
     }
   })
+  // upload/ 삭제
+
+
 
   for (let i = 0; i < images.length; i++) {
     await Images.create({
@@ -164,6 +203,23 @@ router.put("/edit/:id", verifiedToken, async (req, res) => {
   }
 
   res.json({postId})
+})
+
+router.get("/images/:id", async (req, res) => {
+  const id = req.params.id
+  console.log(id) // 12
+
+  const images = await Images.findAll({
+    where: {
+      PostId: id
+    }
+  })
+  result = []
+  for (let i = 0; i < images.length; i++) {
+    result.push(images[i]['image'])
+  }
+  // console.log(result)
+  res.json({result})
 })
 
 module.exports = router

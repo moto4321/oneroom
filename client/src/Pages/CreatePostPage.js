@@ -27,6 +27,7 @@ function CreatePostPage(props) {
   useEffect(() => {
     setStoredTitle(props.storedTitle)
     setStoredDesc(props.storedDesc)
+    setStoredImages(props.storedImages) // ㅇㅇ
   }, [])
 
   const onCreateHandler = () => {
@@ -80,7 +81,11 @@ function CreatePostPage(props) {
         margin: 'auto'
       }}
     >
-      <FileUpload refreshFunction={updateImages} />
+      <FileUpload 
+        refreshFunction={updateImages}
+        storedImages={storedImages} 
+        editPost={props.editPost}
+      />
       <Form>
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
           <Form.Label>Title</Form.Label>

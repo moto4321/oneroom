@@ -1,10 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Dropzone from 'react-dropzone'
 import axios from 'axios'
+import { useParams } from 'react-router-dom';
 
 function FileUpload(props) {
 
+  const { id } = useParams()
+
   const [images, setImages] = useState([])
+  const [storedImages, setStoredImages] = useState([])
+
+  useEffect(() => {
+    axios.get(`http://localhost:3001/post/images/${id}`)
+    .then((response) => {
+      const { result } = response.data
+      setStoredImages(result)
+    })
+  }, [])
 
   const dropHandler = (files) => {
 
@@ -17,7 +29,20 @@ function FileUpload(props) {
     }
     formData.append("file", files[0])
 
-    axios.post(`http://localhost:3001/post/images`, formData, config)
+    if (props.editPost) {
+
+      axios.post(`http://localhost:3001/post/images`, formData, config)
+      .then((response) => {
+        if (response.data.success) {
+          setStoredImages([...storedImages, response.data.filePath])
+          props.refreshFunction([...storedImages, response.data.filePath])
+        } else {
+          alert('Failed to Save')
+        }
+      })
+
+    } else {
+      axios.post(`http://localhost:3001/post/images`, formData, config)
       .then((response) => {
         if (response.data.success) {
           setImages([...images, response.data.filePath])
@@ -26,16 +51,28 @@ function FileUpload(props) {
           alert('Failed to Save')
         }
       })
+    }
   }
 
   const deleteHandler = (image) => {
-    const currentIndex = images.indexOf(image)
 
-    let newImages = [...images]
-    newImages.splice(currentIndex, 1)
+    if (props.editPost) {
+      const currentIndex = storedImages.indexOf(image)
 
-    setImages(newImages)
-    props.refreshFunction(newImages)
+      let newStoredImages = [...storedImages]
+      newStoredImages.splice(currentIndex, 1)
+
+      setStoredImages(newStoredImages)
+      props.refreshFunction(newStoredImages)
+    } else {
+      const currentIndex = images.indexOf(image)
+
+      let newImages = [...images]
+      newImages.splice(currentIndex, 1)
+
+      setImages(newImages)
+      props.refreshFunction(newImages)
+    }
   }
 
 
@@ -55,7 +92,21 @@ function FileUpload(props) {
           </div>
         )}
       </Dropzone>
-      <div style={{ display: 'flex', width: '350px', height: '240px', overflowX: 'scroll' }}>
+      { props.editPost ? (
+        <div style={{ display: 'flex', width: '350px', height: '240px', overflowX: 'scroll' }}>
+        {storedImages.map((image, index) => (
+          <div key={index}>
+            <img 
+              style={{ minWidth: '300px', width: '300px', height: '240px' }}
+              src={`http://localhost:3001/${image}`}
+              onClick={() => {deleteHandler(image)}}
+            />
+            {/* {console.log(image)} */}
+          </div>
+        ))}
+      </div>
+      ) : (
+        <div style={{ display: 'flex', width: '350px', height: '240px', overflowX: 'scroll' }}>
         {images.map((image, index) => (
           <div key={index}>
             <img 
@@ -67,6 +118,8 @@ function FileUpload(props) {
           </div>
         ))}
       </div>
+      )}
+
     </div>
   );
 }

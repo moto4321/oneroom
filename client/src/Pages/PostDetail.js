@@ -97,7 +97,7 @@ function PostDetail() {
       } else {
         setStoredTitle(response.data.post.title)
         setStoredDesc(response.data.post.description)
-        // setStoredImages(response.data.images)
+        setStoredImages(response.data.images)
         setEditPost(true)
       }
     })
@@ -111,6 +111,7 @@ function PostDetail() {
           editPost={editPost}
           storedTitle={storedTitle} 
           storedDesc={storedDesc}
+          storedImages={storedImages}
         />
       ) : ( 
       <div>

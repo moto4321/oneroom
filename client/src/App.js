@@ -9,8 +9,8 @@ import CreatePostPage from './Pages/CreatePostPage';
 import { AuthContext } from './Components/utils/AuthContext'
 import PostDetail from './Pages/PostDetail';
 import axios from 'axios';
+import ChatComponent from './Components/utils/ChatComponent';
 // import { useNavigate } from 'react-router-dom'
-// axios.defaults.withCredentials = true;
 
 
 function App() {
@@ -18,6 +18,8 @@ function App() {
     id: 0,
     status: false,
   })
+
+  const [chatOpen, setChatOpen] = useState(false)
 
   // let navigate = useNavigate()
 
@@ -48,6 +50,14 @@ function App() {
     // navigate("/")
   }
 
+  const openChatting = () => {
+    if (chatOpen) {
+      setChatOpen(false)
+    } else {
+      setChatOpen(true)
+    }
+  }
+
   return (
     <div className="App">
       <AuthContext.Provider value={{ authState, setAuthState }}>
@@ -60,6 +70,7 @@ function App() {
               <Nav>
                 {!authState.status ? (
                 <Nav className="ml-auto">
+                  <img src='img/kakao_login_medium_narrow.png' />
                   <Nav.Link href="/login">Login</Nav.Link>
                   <Nav.Link href="/registration">Register</Nav.Link>
                 </Nav>
@@ -80,6 +91,20 @@ function App() {
             <Route exact path="/create-post" element={<CreatePostPage />} />
           </Routes>
         </Router>
+        <div style={{ position: 'relative' }}>
+          <img 
+            onClick={openChatting}
+            src='img/dialog-box-chat-icon.png' 
+            style={{ position:'absolute', bottom:'0', right:'0', width: '50px' }}
+          />
+          {
+            chatOpen ? (
+              <ChatComponent />
+            ) : (
+              null
+            )
+          }
+        </div>
       </AuthContext.Provider>
     </div>
   );

@@ -88,7 +88,7 @@ function FileUpload(props) {
             {...getRootProps()}
             >
             <input {...getInputProps()} />
-            <div style={{ fontSize: '3rem' }}>+</div>
+            <div style={{ fontSize: '1rem' }}>이미지를 추가하세요</div>
           </div>
         )}
       </Dropzone>

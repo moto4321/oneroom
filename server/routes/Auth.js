@@ -23,6 +23,7 @@ router.post("/registration", async (req, res) => {
       Users.create({
         email: email,
         password: hash,
+        grade: null
       })
       res.json("SUCCESS")
     })

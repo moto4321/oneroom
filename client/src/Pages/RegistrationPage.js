@@ -25,6 +25,9 @@ function RegistrationPage() {
             .then((response) => {
                 navigate("/login")
             })
+            .catch(() => {
+                console.log('er')
+            })
         }
     }
 

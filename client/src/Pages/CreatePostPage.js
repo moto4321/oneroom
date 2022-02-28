@@ -28,9 +28,11 @@ function CreatePostPage(props) {
     setStoredTitle(props.storedTitle)
     setStoredDesc(props.storedDesc)
     setStoredImages(props.storedImages) // ㅇㅇ
+    // console.log(storedImages)// []
   }, [])
 
   const onCreateHandler = () => {
+
     let body = {
       images: images,
       title: title,
@@ -38,6 +40,12 @@ function CreatePostPage(props) {
     }
     
     if (props.editPost) {
+
+      let body = {
+        images: storedImages,
+        title: title,
+        description: description
+      }
       
       axios.put(`http://localhost:3001/post/edit/${id}`, body, {
         headers: {
@@ -65,6 +73,7 @@ function CreatePostPage(props) {
       .catch((err) => {
         console.log(err)
       })
+      // console.log(images)
     }
   }
 
@@ -83,7 +92,7 @@ function CreatePostPage(props) {
     >
       <FileUpload 
         refreshFunction={updateImages}
-        storedImages={storedImages} 
+        storedImages={storedImages}
         editPost={props.editPost}
       />
       <Form>

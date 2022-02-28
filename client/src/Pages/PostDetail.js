@@ -97,7 +97,10 @@ function PostDetail() {
       } else {
         setStoredTitle(response.data.post.title)
         setStoredDesc(response.data.post.description)
-        setStoredImages(response.data.images)
+        // setStoredImages(response.data.images)
+        // console.log(response.data.images)
+        setStoredImages(response.data.imageUrl)
+        // console.log(response.data.imageUrl)
         setEditPost(true)
       }
     })

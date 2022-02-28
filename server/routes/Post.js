@@ -124,6 +124,7 @@ router.delete("/:id", async (req, res) => {
 
 router.get("/edit/:id", async (req, res) => {
   const id = req.params.id
+  const imageUrl = []
 
   const post = await Posts.findOne({
     where: {
@@ -137,9 +138,17 @@ router.get("/edit/:id", async (req, res) => {
     } 
   })
 
+  // console.log(images[0].dataValues.image)
+
+  for (let i = 0; i < images.length; i++) {
+    imageUrl.push(images[i].dataValues.image)
+  }
+  // console.log(images)
+  console.log(imageUrl.length)
+
   res.json({
     post,
-    images
+    imageUrl
   })
 
 })
@@ -192,7 +201,6 @@ router.put("/edit/:id", verifiedToken, async (req, res) => {
     }
   })
   // upload/ 삭제
-
 
 
   for (let i = 0; i < images.length; i++) {

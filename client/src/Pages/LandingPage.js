@@ -13,7 +13,8 @@ function LandingPage() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/post`)
+    // axios.get(`http://localhost:3001/post`)
+    axios.get(`/post`)
       .then((response) => {
         setListOfPosts(response.data.listOfPosts)
       }).catch((err) => {

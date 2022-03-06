@@ -14,7 +14,7 @@ React + express + Mysql 로 만든 개인 프로젝트입니다.
 # Back-End
 <p>
   <img src="https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=node.js&logoColor=black">
-  <img src="https://img.shields.io/badge/express.js-000000?style=for-the-badge&logo=express.js&logoColor=black">
+  <img src="https://img.shields.io/badge/express-000000?style=for-the-badge&logo=express&logoColor=black">
 </p>
 
 # Database

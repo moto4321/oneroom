@@ -8,4 +8,4 @@ React + express + Mysql 로 만든 개인 프로젝트입니다.
 
 3. 댓글 기능, 수정 및 삭제 (본인이 작성한 댓글에 한하여)
 
-<a> <img src="https://ichi.pro/assets/images/max/724/1*FzeoNpQ_2NmMo_I0-iDQlg.png" /> </a>
+<img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black">

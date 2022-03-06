@@ -8,4 +8,8 @@ React + express + Mysql 로 만든 개인 프로젝트입니다.
 
 3. 댓글 기능, 수정 및 삭제 (본인이 작성한 댓글에 한하여)
 
+# Front-End
 <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black">
+
+# Back-End
+<img src="https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=node.js&logoColor=black">

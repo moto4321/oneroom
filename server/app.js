@@ -1,22 +1,19 @@
 const express = require('express')
 const app = express()
-const PORT = 3001
+
+require('dotenv').config();
+const PORT = process.env.PORT
 const db = require('./models')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 const multer = require('multer')
-const dotenv = require('dotenv')
 
-dotenv.config()
+// 아래 주석 두줄은 위의 require('dotenv').config(); 를 분리한 것
+// const dotenv = require('dotenv')
+// dotenv.config()
 app.use(express.json())
 app.use(cookieParser())
-// app.use(express.urlencoded({ extended: true }))
-// app.use(cors({
-//   origin: true,
-//   credentials: true,
-//   methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD', 'DELETE'],
-// }))
 app.use(cors())
 // 기타 express 코드
 // const upload = multer({ dest: 'uploads/', limits: { fileSize: 5 * 1024 * 1024 } });
@@ -26,7 +23,6 @@ app.use(cors())
 
 // app.use('/uploads', express.static('uploads'));
 app.use("/uploads", express.static('uploads'))
-
 const authRouter = require('./routes/Auth')
 app.use("/auth", authRouter)
 const postRouter = require('./routes/Post')
@@ -40,7 +36,6 @@ app.use("/comment", commentRouter)
 // app.listen(PORT, () => {
 //     console.log(`app is listening on port ${PORT}`)
 // })
-
 db.sequelize.sync().then(() => {
     app.listen(PORT, () => {
       console.log(`Server is listening on port ${PORT}`)

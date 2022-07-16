@@ -13,7 +13,6 @@ function LandingPage() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    // axios.get(`http://localhost:3001/post`)
     axios.get(`/post`)
       .then((response) => {
         setListOfPosts(response.data.listOfPosts)
@@ -27,7 +26,7 @@ function LandingPage() {
       {listOfPosts.map((post, key) => {
         return(
           <div>
-            <div onClick={() => { navigate(`/post/${post.id}`) }}>
+            <div onClick={() => { navigate(`/posts/${post.id}`) }}>
               <PostCard 
                 title={post.title}
                 description={post.description} 

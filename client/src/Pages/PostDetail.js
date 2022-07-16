@@ -28,7 +28,7 @@ function PostDetail() {
   let navigate = useNavigate()
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/post/byid/${id}`)
+    axios.get(`/post/byid/${id}`)
       .then((response) => {
         setImages(response.data.images)
         setTitle(response.data.post.title)
@@ -49,7 +49,7 @@ function PostDetail() {
   }, [newComment])
 
   const createCommentHandler = () => {
-    axios.post("http://localhost:3001/comment",
+    axios.post("/comment",
     {
       newComment: newComment,
       PostId: id
@@ -68,7 +68,7 @@ function PostDetail() {
   }
 
   const deletePost = () => {
-    axios.delete(`http://localhost:3001/post/${id}`)
+    axios.delete(`/post/${id}`)
     .then((response) => {
       if (response.data.error) {
         console.log(response.data.error)
@@ -79,7 +79,7 @@ function PostDetail() {
   }
 
   const deleteComment = (id) => {
-    axios.delete(`http://localhost:3001/comment/${id}`)
+    axios.delete(`/comment/${id}`)
     .then((response) => {
       setComments(
         comments.filter((value) => {
@@ -90,17 +90,14 @@ function PostDetail() {
   }
 
   const editPostHandler = () => {
-    axios.get(`http://localhost:3001/post/edit/${id}`)
+    axios.get(`/post/edit/${id}`)
     .then((response) => {
       if (response.data.error) {
         console.log(response.data.error)
       } else {
         setStoredTitle(response.data.post.title)
         setStoredDesc(response.data.post.description)
-        // setStoredImages(response.data.images)
-        // console.log(response.data.images)
         setStoredImages(response.data.imageUrl)
-        // console.log(response.data.imageUrl)
         setEditPost(true)
       }
     })

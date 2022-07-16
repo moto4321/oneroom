@@ -153,12 +153,12 @@ router.get("/edit/:id", async (req, res) => {
 
 })
 
-router.put("/edit/:id", verifiedToken, async (req, res) => {
+router.post("/edit/:id", verifiedToken, async (req, res) => {
   const postId = req.params.id
-  // let title = req.body.title
-  // let description = req.body.description
-  // let image
   let { title, description, images } = req.body
+
+  console.log('here?')
+  console.log(req.body)
 
   const post = await Posts.findOne({ where : { id : postId }})
   //const image = await Images.findAll({ where : { postId : postId }})

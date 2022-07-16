@@ -27,7 +27,7 @@ function CreatePostPage(props) {
   useEffect(() => {
     setStoredTitle(props.storedTitle)
     setStoredDesc(props.storedDesc)
-    setStoredImages(props.storedImages) // ㅇㅇ
+    setStoredImages(props.storedImages)
     // console.log(storedImages)// []
   }, [])
 
@@ -41,26 +41,29 @@ function CreatePostPage(props) {
     
     if (props.editPost) {
 
-      let body = {
-        images: storedImages,
-        title: title,
-        description: description
-      }
+      // let body = {
+      //   images: storedImages,
+      //   title: title,
+      //   description: description
+      // }
+
+      console.log(body)
+      console.log(body.images)
       
-      axios.put(`http://localhost:3001/post/edit/${id}`, body, {
+      // axios.put(`/post/edit/${id}`, body, {
+      axios.post(`/post/edit/${id}`, body, {
         headers: {
           accessToken: localStorage.getItem("token")
         }
       })
       .then((response) => {
-        // navigate(`/post/${response.data.postId}`)
         navigate("/")
       })
 
 
     } else {
 
-      axios.post("http://localhost:3001/post", body, {
+      axios.post("/post", body, {
           headers: {
             accessToken: localStorage.getItem("token")
           }

@@ -21,7 +21,7 @@ function RegistrationPage() {
         if (password !== password2) {
             alert("Password doesn't match")
         } else {
-            axios.post("http://localhost:3001/auth/registration", body)
+            axios.post("/auth/registration", body)
             .then((response) => {
                 navigate("/login")
             })

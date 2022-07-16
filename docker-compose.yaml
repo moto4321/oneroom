@@ -1,0 +1,23 @@
+version: '3'
+services:
+  whereismyroom:
+    build: .
+    ports:
+     - "3001:3001"    
+    expose:
+      - "3001"   
+    links:
+      - mysql_test
+    depends_on:
+      - mysql_test    
+  mysql_test:
+    image: "mysql"
+    ports:
+      - "3306:3306"    
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: oneroom
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
+    expose:
+      - "3306"

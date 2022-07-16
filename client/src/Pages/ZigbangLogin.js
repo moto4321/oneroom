@@ -5,7 +5,7 @@ import { Form, Button } from 'react-bootstrap'
 import { AuthContext } from '../Components/utils/AuthContext'
   
 
-function LoginPage() {
+function ZigbangLoginPage() {
 
     let navigate = useNavigate()
 
@@ -19,7 +19,7 @@ function LoginPage() {
             password: password
         }
         // console.log(body)
-        axios.post('/auth/login', body)
+        axios.post('/auth/zigbang/login', body)
         .then((response) => {
             if (response.data.error) {
                 alert(response.data.error)
@@ -67,4 +67,4 @@ function LoginPage() {
   )
 }
 
-export default LoginPage
+export default ZigbangLoginPage

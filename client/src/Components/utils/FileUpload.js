@@ -11,7 +11,7 @@ function FileUpload(props) {
   const [storedImages, setStoredImages] = useState([])
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/post/images/${id}`)
+    axios.get(`/post/images/${id}`)
     .then((response) => {
       const { result } = response.data
       setStoredImages(result)
@@ -31,7 +31,7 @@ function FileUpload(props) {
 
     if (props.editPost) {
 
-      axios.post(`http://localhost:3001/post/images`, formData, config)
+      axios.post(`/post/images`, formData, config)
       .then((response) => {
         if (response.data.success) {
           setStoredImages([...storedImages, response.data.filePath])
@@ -42,7 +42,7 @@ function FileUpload(props) {
       })
 
     } else {
-      axios.post(`http://localhost:3001/post/images`, formData, config)
+      axios.post(`/post/images`, formData, config)
       .then((response) => {
         if (response.data.success) {
           setImages([...images, response.data.filePath])

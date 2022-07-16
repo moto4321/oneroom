@@ -10,6 +10,8 @@ import { AuthContext } from './Components/utils/AuthContext'
 import PostDetail from './Pages/PostDetail';
 import axios from 'axios';
 import ChatComponent from './Components/utils/ChatComponent';
+import ZigbangLoginPage from './Pages/ZigbangLogin';
+import DabangLoginPage from './Pages/DabangLogin';
 // import { useNavigate } from 'react-router-dom'
 
 
@@ -24,7 +26,7 @@ function App() {
   // let navigate = useNavigate()
 
   useEffect(() => {
-    axios.get("http://localhost:3001/auth", {
+    axios.get("/auth", {
       headers: {
         accessToken: localStorage.getItem('token')
       }
@@ -77,7 +79,9 @@ function App() {
                 ) : (
                 <Nav className="ml-auto">
                   <Nav.Link onClick={onLogoutHandler}>Logout</Nav.Link>
-                  <Nav.Link href="/create-post">createPost</Nav.Link>
+                  <Nav.Link href="/create-post">CreatePost</Nav.Link>
+                  <Nav.Link href="/zigbang-login">직방 연결하기</Nav.Link>
+                  <Nav.Link href="/dabang-login">다방 연결하기</Nav.Link>
                 </Nav>
                 )}
               </Nav>
@@ -86,7 +90,9 @@ function App() {
           <Routes>
             <Route exact path="/" element={<LandingPage />} />
             <Route exact path="/login" element={<LoginPage />} />
-            <Route exact path="/post/:id" element={<PostDetail />} />
+            <Route exact path="/zigbang-login" element={<ZigbangLoginPage />} />
+            <Route exact path="/dabang-login" element={<DabangLoginPage />} />
+            <Route exact path="/posts/:id" element={<PostDetail />} />
             <Route exact path="/registration" element={<RegistrationPage />} />
             <Route exact path="/create-post" element={<CreatePostPage />} />
           </Routes>

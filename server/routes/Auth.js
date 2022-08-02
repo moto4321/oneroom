@@ -8,6 +8,10 @@ const cookieParser = require('cookie-parser')
 const { verifiedToken } = require('../middlewares/authMiddleware')
 const puppeteer = require('puppeteer')
 
+const zigbangUrl = 'https://www.zigbang.com/'
+const zigbangKakaoUrl = 'https://account.zigbang.com/login'
+const itemList = []
+
 router.get("/", verifiedToken, (req, res) => {
   res.json(req.user)
 })
@@ -62,26 +66,101 @@ router.post("/login", async (req, res) => {
   }
 })
 
-router.post("/zigbang/login", (req, res) => {
+router.post("/zigbang/login", async (req, res) => {
   const { email, password } = req.body
-  // 직방로그인
-  const browser = await puppeteer.launch()
-  const page = await browser.newPage()
-  await page.goto(`https://accounts.kakao.com/login?continue=https%3A%2F%2Fkauth.kakao.com%2Foauth%2Fauthorize%3Fencode_state%3Dtrue%26response_type%3Dcode%26redirect_uri%3Dhttps%253A%252F%252Faccount.zigbang.com%252Fv2%252Foauth%252Fcallback%26state%3D%257B%2522provider%2522%253A%2522kakao%2522%252C%2522zigbang_client_id%2522%253A%2522zigbang%2522%252C%2522redirect_url%2522%253A%2522https%253A%252F%252Fwww.zigbang.com%252Foauth%252Fcallback%2522%257D%26client_id%3D63934eee1ea969c5b8e3bb402eecb944`)
-  await page.evaluate((id, pw) => {
-    document.querySelector('input[name="id]').value = id
-    document.querySelector('input[name="password"]').value = pw
-  }, email, password)
+  // 직방 카카오로그인만 현재 구현
+  console.log(email, password)
+
+  //
+  puppeteer.launch({
+    headless: false
+  }).then(async browser => {
+    const page = await browser.newPage();
+    // 직방 카카오 로그인 전 페이지
+    await page.goto(zigbangKakaoUrl)
+    // 페이지가 전부 로드된 후 작업실행
+    console.log(1)
+    // await page.waitForNavigation();
+    // 카카오 로그인 버튼 클릭
+    console.log(99)
+    await page.click('#kakao_로그인 > div.css-901oao.r-1b277g5.r-143r1dj.r-ubezar')
+    // 페이지가 전부 로드된 후 작업실행
+    console.log(2)
+    // await page.waitForNavigation();
+    await page.waitForNavigation({ waitUntil: 'networkidle0' })
+
+    if (page.url() === 'https://account.zigbang.com/v2/oauth/login?provider=kakao') {
+      await page.goto(zigbangUrl)
+    } else {
+      // 이메일 패스워드 input값 입력
+      await page.type( "#id_email_2", email);
+      await page.type( "#id_password_3", password);
+      // // 로그인 버튼 클릭
+      await page.click('.submit')
+    }
+
+    // 내가 북마크한 정보들 크롤링
+    await page.goto(`https://www.zigbang.com/item/zzim`)
+    const selector = "body > div.wrap > div.container > div > div.content.left-content > div > div.zzim-list > a:nth-child(2) > div > div.i-tit > strong"
+    await page.waitForSelector(selector)
+    const data = await page.$eval(selector, (elem) => elem.textContent)
+
+    console.log(data)
+  })
+
+  //
+
+
+
+
+  // const browser = await puppeteer.launch()
+  // const page = await browser.newPage()
+
   
-  // 로그인 버튼 클릭
-  await page.click('.submit')
+  // // 페이지가 전부 로드된 후 작업실행
+  // console.log(1)
+  // await page.waitForNavigation();
+  // // 카카오 로그인 버튼 클릭
+  // console.log(99)
+  // await page.click('#kakao_로그인 > div.css-901oao.r-1b277g5.r-143r1dj.r-ubezar')
+  // // 페이지가 전부 로드된 후 작업실행
+  // console.log(2)
+  // await page.waitForNavigation();
+  // // 이메일 패스워드 input값 입력
+	// await page.type( "#id_email_2", email);
+	// await page.type( "#id_password_3", password);
+  // // // 로그인 버튼 클릭
+  // await page.click('.submit')
+  // // 페이지가 전부 로드된 후 작업실행
+  // console.log(3)
+  // await page.waitForNavigation();
 
-  // 로그인 화면이 전환될 때까지 .5초간 기다려라 => 이게 필요한가?
-  await page.waitFor(500)
+  // // 내가 북마크한 정보들 크롤링
+  // await page.goto(`https://www.zigbang.com/item/zzim`)
+  // const selector = "body > div.wrap > div.container > div > div.content.left-content > div > div.zzim-list > a:nth-child(2) > div > div.i-tit > strong"
+  // await page.waitForSelector(selector)
+  // const data = await page.$eval(selector, (elem) => elem.textContent)
 
-  // 내가 북마크한 정보들 크롤링
+  // console.log(data)
+  // if (page.url() === zigbangLoginUrl) {
+  //   // 로그인 실패
+  // } else {
+  //   // 내가 북마크한 정보들 크롤링
+  //   await page.goto(`https://www.zigbang.com/item/zzim`)
+  //   // body > div.wrap > div.container > div > div.content.left-content > div > div.zzim-list
+  //   const selector = "body > div.wrap > div.container > div > div.content.left-content > div > div.zzim-list > a:nth-child(2) > div > div.i-tit > strong"
+  //   await page.waitForSelector(selector)
 
-  // 홈으로 redirect
+  //   const data = await page.$eval(selector, (elem) => elem.textContent)
+
+  //   console.log(data)
+
+    // 홈으로 redirect
+  // }
+
+  
+
+
 })
 
 module.exports = router

@@ -11,7 +11,7 @@ function ZigbangLoginPage() {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const { setAuthState } = useContext(AuthContext) 
+    const { setAuthState } = useContext(AuthContext)
 
     const onSubmitHandler = () => {
         let body = {
@@ -29,7 +29,7 @@ function ZigbangLoginPage() {
                     id: response.data.id, 
                     status: true
                 })
-                navigate("/")           
+                navigate("/")
             }
         })
     }
@@ -45,11 +45,12 @@ function ZigbangLoginPage() {
              }}
         >
             <Form>
+                <div>카카오 로그인</div>
                 <Form.Group className="mb-3" controlId="formGroupEmail">
                     <Form.Label>Email address</Form.Label>
                     <Form.Control
                         onChange={(event) => {setEmail(event.target.value)}} 
-                        type="email" 
+                        // type="email" 
                         placeholder="Enter email" />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formGroupPassword">

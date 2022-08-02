@@ -6,7 +6,7 @@ const PORT = process.env.PORT
 const db = require('./models')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
-const bodyParser = require('body-parser')
+// const bodyParser = require('body-parser')
 const multer = require('multer')
 
 // 아래 주석 두줄은 위의 require('dotenv').config(); 를 분리한 것
@@ -21,7 +21,6 @@ app.use(cors())
 //   console.log(req.file); 
 // });
 
-// app.use('/uploads', express.static('uploads'));
 app.use("/uploads", express.static('uploads'))
 const authRouter = require('./routes/Auth')
 app.use("/auth", authRouter)

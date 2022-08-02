@@ -27,6 +27,9 @@ jwt를 localstorage에 저장하기 위해서 프론트로 JSON형식으로 토�
 ## 이미지 업로드
 multer라는 라이브러리를 사용했습니다.
 
+## puppeteer
+직방 로그인 후 북마크 정보 가져오기
+
 # Database
 <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
 

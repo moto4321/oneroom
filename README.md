@@ -33,3 +33,12 @@ multer라는 라이브러리를 사용했습니다.
 # Database
 <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
 
+
+# Git Message
+- feat: 새로운 기능 추가
+- fix: 버그 수정
+- docs: 문서 수정
+- style: 포맷, 세미콜론 빠졌을 때, 코드 변경이 없는 수정
+- refactor: 리팩토링
+- test: 테스트 코드 추가, 테스트코드 리팩토링
+- chore: 빌드관련 수정, 패키지 매니저 수정

@@ -8,6 +8,7 @@ const cors = require('cors')
 const cookieParser = require('cookie-parser')
 // const bodyParser = require('body-parser')
 const multer = require('multer')
+const routes = require('./routes')
 
 // 아래 주석 두줄은 위의 require('dotenv').config(); 를 분리한 것
 // const dotenv = require('dotenv')
@@ -21,13 +22,15 @@ app.use(cors())
 //   console.log(req.file); 
 // });
 
-app.use("/uploads", express.static('uploads'))
-const authRouter = require('./routes/Auth')
-app.use("/auth", authRouter)
-const postRouter = require('./routes/Post')
-app.use("/post", postRouter)
-const commentRouter = require('./routes/Comment')
-app.use("/comment", commentRouter)
+app.use('/', routes)
+
+// app.use("/uploads", express.static('uploads'))
+// const authRouter = require('./routes/Auth')
+// app.use("/auth", authRouter)
+// const postRouter = require('./routes/Post')
+// app.use("/post", postRouter)
+// const commentRouter = require('./routes/Comment')
+// app.use("/comment", commentRouter)
 
 
 
